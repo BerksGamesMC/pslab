@@ -59,6 +59,40 @@
             white-space: nowrap;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         }
+        #ps4-cache-debug-console {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ff66;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.35;
+            padding: 8px 10px;
+            border: 1px solid #00ff66;
+            border-radius: 6px;
+            z-index: 999999;
+            text-align: left;
+        }
+        #ps4-cache-debug-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        #ps4-cache-debug-clear {
+            background: #222;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
             body.bg-gray-900 {
                 background-size: cover !important;
@@ -86,6 +120,81 @@
 
     <iframe id="cacheFrame" src="about:blank"></iframe>
 
+    <!-- PS4 Cache On-Screen Debug Console -->
+    <div id="ps4-cache-debug-console">
+        <div id="ps4-cache-debug-header">
+            <strong>PS4 Keş Debug Konsol</strong>
+            <button id="ps4-cache-debug-clear" type="button"
+                onclick="document.getElementById('ps4-cache-debug-logs').innerHTML=''">Təmizlə</button>
+        </div>
+        <div id="ps4-cache-debug-logs"></div>
+    </div>
+
+    <script>
+        (function () {
+            var logBox = document.getElementById('ps4-cache-debug-logs');
+
+            function writeLog(type, msg, color) {
+                if (!logBox) return;
+                var line = document.createElement('div');
+                line.style.color = color || '#00ff66';
+                line.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
+                line.style.padding = '2px 0';
+                line.style.wordBreak = 'break-all';
+                var now = new Date();
+                var time = now.toTimeString().split(' ')[0];
+                line.textContent = '[' + time + '] [' + type + '] ' + msg;
+                logBox.appendChild(line);
+                logBox.parentElement.scrollTop = logBox.parentElement.scrollHeight;
+            }
+
+            window.cacheDebugLog = writeLog;
+
+            function formatArgs(args) {
+                return Array.prototype.slice.call(args).map(function (a) {
+                    if (typeof a === 'object' && a !== null) {
+                        try { return JSON.stringify(a); } catch (e) { return String(a); }
+                    }
+                    return String(a);
+                }).join(' ');
+            }
+
+            var origLog = console.log;
+            var origWarn = console.warn;
+            var origError = console.error;
+
+            console.log = function () {
+                writeLog('LOG', formatArgs(arguments), '#00ff66');
+                if (origLog) origLog.apply(console, arguments);
+            };
+
+            console.warn = function () {
+                writeLog('WARN', formatArgs(arguments), '#ffcc00');
+                if (origWarn) origWarn.apply(console, arguments);
+            };
+
+            console.error = function () {
+                writeLog('ERR', formatArgs(arguments), '#ff4444');
+                if (origError) origError.apply(console, arguments);
+            };
+
+            window.addEventListener('error', function (e) {
+                var target = e.target || e.srcElement;
+                if (target && (target.tagName === 'IMG' || target.tagName === 'SCRIPT' || target.tagName === 'LINK')) {
+                    writeLog('ASSET_ERR', target.tagName + ' yüklənmədi: ' + (target.src || target.href), '#ff6666');
+                } else {
+                    writeLog('JS_ERR', (e.message || 'Xəta') + ' (' + (e.filename || '') + ':' + (e.lineno || '') + ')', '#ff4444');
+                }
+            }, true);
+
+            window.addEventListener('unhandledrejection', function (e) {
+                writeLog('PROMISE_ERR', e.reason, '#ff4444');
+            });
+
+            writeLog('INFO', 'Cache konsol aktivdir. UA: ' + navigator.userAgent, '#aaaaaa');
+        })();
+    </script>
+
     <script src="./includes/js/storage.js"></script>
     <script src="./includes/js/testMode.js"></script>
     <script src="./includes/js/firmware.js"></script>
@@ -99,6 +208,10 @@
         var fwVersion = getPs4FwVersion();
         var targetPage = getCachePage(fwVersion);
 
+        if (window.cacheDebugLog) {
+            window.cacheDebugLog('FW', 'FW: ' + (fwVersion || 'naməlum') + ' | Target: ' + targetPage, '#66ccff');
+        }
+
         var statusEl = document.getElementById('cacheStatus');
         var fillEl = document.getElementById('progressFill');
         var frame = document.getElementById('cacheFrame');
@@ -107,6 +220,10 @@
         window.addEventListener('message', function (event) {
             var data = event.data;
             if (!data || !data.type) return;
+
+            if (window.cacheDebugLog) {
+                window.cacheDebugLog('MSG', JSON.stringify(data), '#66ccff');
+            }
 
             if (data.type === 'CACHE_CHECKING') {
                 statusEl.textContent = 'Yeniləmələr yoxlanılır...';
