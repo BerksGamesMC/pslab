@@ -47,6 +47,11 @@
             background: transparent !important;
             background-color: transparent !important;
         }
+        #pslogo, #exploitRun {
+            position: relative;
+            z-index: 25;
+            cursor: pointer;
+        }
         #lab-top-left-brand {
             position: fixed;
             top: 14px;
@@ -91,6 +96,7 @@
             padding: 6px 16px;
             border-radius: 8px;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+            pointer-events: none;
         }
         #lab-hidden-2026 {
             position: fixed;
@@ -208,7 +214,7 @@
             </header>
 
             <!-- PS Button -->
-            <button id="pslogo">
+            <button id="pslogo" type="button" onclick="labFallbackStart()">
                 <div id="ps-logo-container"
                     class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 transform hover:scale-102">
                     <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
@@ -317,7 +323,7 @@
                                 onchange="saveJbFlavor(this.name, this.value)">
                             <span class="text-base font-semibold text-white/90 select-none">nexHEN</span>
                         </label>
-                        <button id="exploitRun"
+                        <button id="exploitRun" type="button" onclick="labFallbackStart()"
                             class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-play" viewBox="0 0 16 16">
@@ -781,4 +787,214 @@
                             onchange="saveLanguage(this.value);">
                         <p>Espa&ntilde;ol</p>
                     </label>
-                    <label
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="de" class="ml-2"
+                            onchange="saveLanguage(this.value);">
+                        <p>Deutsch</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="zh-cn" class="ml-2"
+                            onchange="saveLanguage(this.value);">
+                        <p>简体中文</p>
+                    </label>
+                </div>
+            </div>
+            <div id="chooseTheme" class="mb-4 flex">
+                <h3 class="text-lg font-semibold mb-2" id="layout">Görünüş</h3>
+                <div class="radio-group space-y-2 flex flex-wrap flex-row" id="layouts">
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="theme" value="index" onchange="setLayout(this.value);">
+                        <p id="defaultTheme">Standart</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="theme" value="compact" onchange="setLayout(this.value);">
+                        <p id="compactTheme">Kompakt</p>
+                    </label>
+                </div>
+                <!-- Color  -->
+                <h3 class="text-lg font-semibold mb-2" id="themeWord">Tema</h3>
+                <div class="radio-group space-y-2 flex flex-wrap" id="colors">
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="colorTheme" value="default" onchange="setTheme(this.value);">
+                        <p id="defaultColor">Standart</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="colorTheme" value="vibrant" onchange="setTheme(this.value);">
+                        <p id="vibrantColor">Canlı</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="colorTheme" value="catppuccino" onchange="setTheme(this.value);">
+                        <p id="catppuccinoColor">Catppuccino</p>
+                    </label>
+                </div>
+            </div>
+            <button onclick="themePopup()"
+                class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
+                id="close-theme">Bağla</button>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 bg-black/50 z-50 flex backdrop-blur-sm items-center justify-center p-4 hidden"
+        id="choose-fanThreshold-overlay">
+        <div id="choose-fanThreshold" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Fan Həddi</h2>
+            <div class="space-y-2 text-white/80">
+                <p>Fanın yüksək sürətə keçəcəyi temperatur həddini təyin edir.</p>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-l font-bold mb-4">Temperatur seçin</h3>
+                <div class="flex justify-around gap-2 text-sm text-white/70 w-full">
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="60"
+                        onclick="loadFanThreshold(this.id);">60°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="70"
+                        onclick="loadFanThreshold(this.id);">70°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="80"
+                        onclick="loadFanThreshold(this.id);">80°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="85"
+                        onclick="loadFanThreshold(this.id);">85°C</button>
+                </div>
+            </div>
+
+            <div id="defaultTempDiv" class="flex justify-center gap-2 flex-col">
+                <small class="text-center">&#8593;</small>
+                <small class="text-center" id="defaultTemp">Standart</small>
+            </div>
+            <button onclick="chooseFanThreshold()"
+                class="mt-4 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
+                id="close-fanChoose">
+                Bağla</button>
+        </div>
+    </div>
+
+    <script>
+        // Global Error Tracker
+        function reportGlobalError(title, details) {
+            var errorConsole = document.getElementById('console');
+            if (!errorConsole) return;
+
+            if (errorConsole.textContent.trim() === '--') {
+                errorConsole.textContent = '';
+            }
+
+            var entry = document.createElement('span');
+            entry.style.color = '#f87171';
+            entry.style.whiteSpace = 'pre-wrap';
+            entry.textContent = title + '\n' + details + '\n\n';
+            errorConsole.appendChild(entry);
+
+            var consolePanel = document.getElementById('DebugConsole');
+            if (consolePanel) consolePanel.scrollTop = consolePanel.scrollHeight;
+        }
+
+        window.onerror = function (msg, url, lineno, colno, error) {
+            var stack = error && error.stack ? error.stack : 'No stack trace';
+            var details = 'URL: ' + url + '\nLine: ' + lineno + ', Col: ' + colno + '\n\n' + stack;
+            console.error('[onerror]', msg, url, lineno, colno, stack);
+            reportGlobalError('Xəta: ' + msg, details);
+            return true;
+        };
+
+        // Catch unhandled promise rejections
+        window.addEventListener('unhandledrejection', function (event) {
+            var reason = event.reason;
+            var msg = reason instanceof Error
+                ? reason.message + '\n\nStack:\n' + reason.stack
+                : String(reason);
+            console.error('[unhandledrejection]', reason);
+            reportGlobalError('Gözlənilməyən Promise Xətası:', msg);
+        });
+
+        var ua = navigator.userAgent;
+        var isPS4 = ua.indexOf("PlayStation 4") !== -1;
+        var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));
+        window.entrypoint672_result = 0;
+        window.exploitsetup672_result = 0;
+
+        var jailbreakNow = sessionStorage.getItem("jailbreakNow") != null;
+        if (isPS4 && is67x && jailbreakNow) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', './src/badhoist/672entrypoint.js', false);
+                xhr.send('');
+                if (xhr.status === 200) {
+                    eval.call(top.window, xhr.responseText);
+                }
+            } catch (e) {
+                console.error("Early entrypoint hook failed: " + e.message);
+            }
+        }
+    </script>
+    <script src="./includes/js/storage.js"></script>
+    <script src="./includes/js/testMode.js"></script>
+    <script src="./includes/js/firmware.js"></script>
+    <script src="./includes/js/utilities.js"></script>
+    <script src="./includes/js/HENs.js"></script>
+    <script src="./includes/js/checkFw.js"></script>
+    <script id="main-logic-loader">
+        (function () {
+            var isModern = 'noModule' in document.createElement('script');
+            var scriptPath = isModern ? './includes/js/jailbreak.js' : './includes/js/jailbreak-legacy.js';
+            document.write('<script src="' + scriptPath + '"><\/script>');
+        })();
+    </script>
+    <script src="./includes/js/initial.js"></script>
+    <script src="./includes/js/cache.js"></script>
+    <script src="./includes/js/deliverPayload.js"></script>
+    <script src="./includes/js/payloadsList.js"></script>
+    <script src="./includes/js/design.js"></script>
+    <script src="./includes/js/language.js"></script>
+    <script src="./includes/js/autoJbRetry.js"></script>
+    <script src="./includes/js/events.js"></script>
+    <script src="./includes/js/payloadsHandler.js"></script>
+    <script>
+        function labFallbackStart() {
+            if (window.__labJbStarted) return;
+            try {
+                if (typeof startExploit === 'function') {
+                    window.__labJbStarted = true;
+                    startExploit();
+                    return;
+                }
+                if (typeof runExploit === 'function') {
+                    window.__labJbStarted = true;
+                    runExploit();
+                    return;
+                }
+                if (typeof EXPLOIT_HANDLERS !== 'undefined' && typeof localStorage !== 'undefined') {
+                    var idx = parseFloat(localStorage.getItem('exploitChain'));
+                    if (!isNaN(idx) && typeof EXPLOIT_HANDLERS[idx] === 'function') {
+                        window.__labJbStarted = true;
+                        if (typeof updateJbStats === 'function') updateJbStats(1, 0);
+                        EXPLOIT_HANDLERS[idx]();
+                        return;
+                    }
+                }
+            } catch (e) {
+                reportGlobalError('Jailbreak başlatma xətası:', e && e.stack ? e.stack : String(e));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.abortLoading) return;
+            try {
+                if (typeof loadSettings === 'function') {
+                    loadSettings();
+                }
+            } catch (e) {
+                console.error('loadSettings error:', e);
+            }
+
+            try {
+                localStorage.setItem('jbFlavor', 'GoldHEN');
+                var ghInitial = document.querySelector('input[name="hen"][value="GoldHEN"]');
+                var ghExploit = document.querySelector('input[name="hen2"][value="GoldHEN"]');
+                if (ghInitial) ghInitial.checked = true;
+                if (ghExploit) ghExploit.checked = true;
+            } catch (e) {
+                console.error('GoldHEN sync error:', e);
+            }
+        });
+    </script>
+</body>
+
+</html>
