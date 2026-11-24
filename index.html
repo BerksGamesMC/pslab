@@ -16,14 +16,14 @@
     <meta property="og:title" content="PlayStation Programmer Lab">
     <meta property="og:description"
         content="PlayStation Programmer Lab - 4.50-5.07 və 6.70-14.02 PS4 üçün rahat və funksional exploit host.">
-    <meta property="og:image" content="https://resimyukle.app/i/UsxxyLin.jpeg">
+    <meta property="og:image" content="./image/Lab.png">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="PlayStation Programmer Lab">
     <meta name="twitter:description"
         content="PlayStation Programmer Lab - 4.50-5.07 və 6.70-14.02 PS4 üçün rahat və funksional exploit host.">
-    <meta name="twitter:image" content="https://resimyukle.app/i/UsxxyLin.jpeg">
+    <meta name="twitter:image" content="./image/Lab.png">
     <link rel="icon" href="./includes/assets/icons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" id="main-stylesheet" href="">
     <link rel="stylesheet" id="color-stylesheet" href="">
@@ -37,7 +37,7 @@
         }
         body.bg-gray-900 {
             background-color: #0b1120 !important;
-            background-image: linear-gradient(rgba(11, 17, 32, 0.52), rgba(11, 17, 32, 0.65)), url('https://resimyukle.app/i/2kwiE0mf.jpeg') !important;
+            background-image: linear-gradient(rgba(11, 17, 32, 0.52), rgba(11, 17, 32, 0.65)), url('./image/Arxa.png') !important;
             background-size: 100% 100% !important;
             background-position: center center !important;
             background-repeat: no-repeat !important;
@@ -157,7 +157,7 @@
 <body class="bg-gray-900 text-white">
     <!-- Yuxari En Solda Logo 1254x1254 ve Yaninda PlayStation Programmer Lab -->
     <div id="lab-top-left-brand">
-        <img src="https://resimyukle.app/i/UsxxyLin.jpeg" width="1254" height="1254" alt="PlayStation Programmer Lab Logo">
+        <img src="./image/Lab.png" width="1254" height="1254" alt="PlayStation Programmer Lab Logo">
         <span>PlayStation Programmer Lab</span>
     </div>
 
@@ -781,196 +781,4 @@
                             onchange="saveLanguage(this.value);">
                         <p>Espa&ntilde;ol</p>
                     </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="de" class="ml-2"
-                            onchange="saveLanguage(this.value);">
-                        <p>Deutsch</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="zh-cn" class="ml-2"
-                            onchange="saveLanguage(this.value);">
-                        <p>简体中文</p>
-                    </label>
-                </div>
-            </div>
-            <div id="chooseTheme" class="mb-4 flex">
-                <h3 class="text-lg font-semibold mb-2" id="layout">Görünüş</h3>
-                <div class="radio-group space-y-2 flex flex-wrap flex-row" id="layouts">
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="theme" value="index" onchange="setLayout(this.value);">
-                        <p id="defaultTheme">Standart</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="theme" value="compact" onchange="setLayout(this.value);">
-                        <p id="compactTheme">Kompakt</p>
-                    </label>
-                </div>
-                <!-- Color  -->
-                <h3 class="text-lg font-semibold mb-2" id="themeWord">Tema</h3>
-                <div class="radio-group space-y-2 flex flex-wrap" id="colors">
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="colorTheme" value="default" onchange="setTheme(this.value);">
-                        <p id="defaultColor">Standart</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="colorTheme" value="vibrant" onchange="setTheme(this.value);">
-                        <p id="vibrantColor">Canlı</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="colorTheme" value="catppuccino" onchange="setTheme(this.value);">
-                        <p id="catppuccinoColor">Catppuccino</p>
-                    </label>
-                </div>
-            </div>
-            <button onclick="themePopup()"
-                class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
-                id="close-theme">Bağla</button>
-        </div>
-    </div>
-
-    <div class="fixed inset-0 bg-black/50 z-50 flex backdrop-blur-sm items-center justify-center p-4 hidden"
-        id="choose-fanThreshold-overlay">
-        <div id="choose-fanThreshold" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h2 class="text-2xl font-bold mb-4">Fan Həddi</h2>
-            <div class="space-y-2 text-white/80">
-                <p>Fanın yüksək sürətə keçəcəyi temperatur həddini təyin edir.</p>
-            </div>
-            <div class="mt-6">
-                <h3 class="text-l font-bold mb-4">Temperatur seçin</h3>
-                <div class="flex justify-around gap-2 text-sm text-white/70 w-full">
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="60"
-                        onclick="loadFanThreshold(this.id);">60°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="70"
-                        onclick="loadFanThreshold(this.id);">70°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="80"
-                        onclick="loadFanThreshold(this.id);">80°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="85"
-                        onclick="loadFanThreshold(this.id);">85°C</button>
-                </div>
-            </div>
-
-            <div id="defaultTempDiv" class="flex justify-center gap-2 flex-col">
-                <small class="text-center">&#8593;</small>
-                <small class="text-center" id="defaultTemp">Standart</small>
-            </div>
-            <button onclick="chooseFanThreshold()"
-                class="mt-4 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
-                id="close-fanChoose">
-                Bağla</button>
-        </div>
-    </div>
-
-    <script>
-        // Global Error Tracker
-        function reportGlobalError(title, details) {
-            var errorConsole = document.getElementById('console');
-            if (!errorConsole) return;
-
-            if (errorConsole.textContent.trim() === '--') {
-                errorConsole.textContent = '';
-            }
-
-            var entry = document.createElement('span');
-            entry.style.color = '#f87171';
-            entry.style.whiteSpace = 'pre-wrap';
-            entry.textContent = title + '\n' + details + '\n\n';
-            errorConsole.appendChild(entry);
-
-            var consolePanel = document.getElementById('DebugConsole');
-            if (consolePanel) consolePanel.scrollTop = consolePanel.scrollHeight;
-        }
-
-        window.onerror = function (msg, url, lineno, colno, error) {
-            var stack = error && error.stack ? error.stack : 'No stack trace';
-            var details = 'URL: ' + url + '\nLine: ' + lineno + ', Col: ' + colno + '\n\n' + stack;
-            console.error('[onerror]', msg, url, lineno, colno, stack);
-            reportGlobalError('Xəta: ' + msg, details);
-            return true;
-        };
-
-        // Catch unhandled promise rejections
-        window.addEventListener('unhandledrejection', function (event) {
-            var reason = event.reason;
-            var msg = reason instanceof Error
-                ? reason.message + '\n\nStack:\n' + reason.stack
-                : String(reason);
-            console.error('[unhandledrejection]', reason);
-            reportGlobalError('Gözlənilməyən Promise Xətası:', msg);
-        });
-
-        var ua = navigator.userAgent;
-        var isPS4 = ua.indexOf("PlayStation 4") !== -1;
-        var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));
-        window.entrypoint672_result = 0;
-        window.exploitsetup672_result = 0;
-
-        var jailbreakNow = sessionStorage.getItem("jailbreakNow") != null;
-        if (isPS4 && is67x && jailbreakNow) {
-            try {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', './src/badhoist/672entrypoint.js', false);
-                xhr.send('');
-                if (xhr.status === 200) {
-                    eval.call(top.window, xhr.responseText);
-                }
-            } catch (e) {
-                console.error("Early entrypoint hook failed: " + e.message);
-            }
-        }
-    </script>
-    <script src="./includes/js/storage.js"></script>
-    <script src="./includes/js/testMode.js"></script>
-    <script src="./includes/js/firmware.js"></script>
-    <script src="./includes/js/utilities.js"></script>
-    <script src="./includes/js/HENs.js"></script>
-    <script src="./includes/js/checkFw.js"></script>
-    <script id="main-logic-loader">
-        (function () {
-            var isModern = 'noModule' in document.createElement('script');
-            var scriptPath = isModern ? './includes/js/jailbreak.js' : './includes/js/jailbreak-legacy.js';
-            document.write('<script src="' + scriptPath + '"><\/script>');
-        })();
-    </script>
-    <script src="./includes/js/initial.js"></script>
-    <script src="./includes/js/cache.js"></script>
-    <script src="./includes/js/deliverPayload.js"></script>
-    <script src="./includes/js/payloadsList.js"></script>
-    <script src="./includes/js/design.js"></script>
-    <script src="./includes/js/language.js"></script>
-    <script src="./includes/js/autoJbRetry.js"></script>
-    <script src="./includes/js/events.js"></script>
-    <script src="./includes/js/payloadsHandler.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.abortLoading) return;
-            if (typeof loadSettings === 'function') {
-                loadSettings();
-            }
-
-            // GoldHEN avtomatik secili saxlanilsin
-            var ghInitial = document.querySelector('input[name="hen"][value="GoldHEN"]');
-            var ghExploit = document.querySelector('input[name="hen2"][value="GoldHEN"]');
-            if (ghInitial) ghInitial.checked = true;
-            if (ghExploit) ghExploit.checked = true;
-            localStorage.setItem('jbFlavor', 'GoldHEN');
-            if (typeof saveJbFlavor === 'function') {
-                saveJbFlavor('hen', 'GoldHEN');
-            }
-
-            // Dil Azerbaycan olarsa ekran metnlerini de Azerbaycanca saxla
-            var lang = localStorage.getItem('language') || 'az';
-            if (lang === 'az') {
-                var startTxt = document.getElementById('click-to-start-text');
-                if (startTxt && (!startTxt.textContent || startTxt.textContent.trim() === '')) {
-                    startTxt.textContent = 'Başlamaq üçün klikləyin';
-                }
-                var fwEl = document.getElementById('PS4FW');
-                if (fwEl && fwEl.textContent.indexOf('Not running on PS4') !== -1) {
-                    fwEl.textContent = fwEl.textContent.replace('Not running on PS4, platform:', 'PS4 üzərindən işləmir, platforma:');
-                }
-            }
-        });
-    </script>
-</body>
-
-</html>
+                    <label
