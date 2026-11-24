@@ -5,22 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>PlayStation Programmer Lab - Keşləmə</title>
-    <meta name="author" content="ArabPixel">
+    <meta name="author" content="B7rks">
+    <link rel="icon" href="./image/Lab.png" type="image/png">
     <link rel="stylesheet" href="./includes/css/colors/default.css">
     <link rel="stylesheet" href="./includes/css/layouts/index.css">
     <link rel="stylesheet" href="./includes/css/cache.css">
+    <style>
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        body.bg-gray-900 {
+            background-color: #0b1120 !important;
+            background-image: linear-gradient(rgba(11, 17, 32, 0.58), rgba(11, 17, 32, 0.72)), url('./image/Arxa.png') !important;
+            background-size: 100% 100% !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+        .mainContainer, .cache-screen {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+        #lab-cache-brand {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.72);
+            padding: 6px 12px 6px 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(6px);
+            pointer-events: none;
+        }
+        #lab-cache-brand img {
+            width: 38px;
+            height: 38px;
+            border-radius: 7px;
+            object-fit: cover;
+            display: block;
+        }
+        #lab-cache-brand span {
+            font-weight: 700;
+            font-size: 15px;
+            color: #ffffff;
+            white-space: nowrap;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+        }
+        @media (max-width: 768px) {
+            body.bg-gray-900 {
+                background-size: cover !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-900 text-white">
+    <div id="lab-cache-brand">
+        <img src="./image/Lab.png" width="1254" height="1254" alt="PlayStation Programmer Lab Logo">
+        <span>PlayStation Programmer Lab</span>
+    </div>
+
     <main class="mainContainer">
         <section class="cache-screen">
-            <div class="cache-title">Keş yaddaşa yazılır</div>
+            <div class="cache-title">PlayStation Programmer Lab — Keş yaddaşa yazılır</div>
             <div class="progress-bar-wrap">
                 <div class="progress-bar-fill" id="progressFill"></div>
             </div>
             <div class="cache-subtitle" id="cacheStatus">Hazırlanır...</div>
         </section>
-        <div class="absolute bottom-10 text-center w-full">Firmware Əsaslı Keşləmə Sistemi</div>
+        <div class="absolute bottom-10 text-center w-full">Firmware Əsaslı Keşləmə Sistemi • Dizayner : B7rks</div>
     </main>
 
     <iframe id="cacheFrame" src="about:blank"></iframe>
@@ -29,6 +90,12 @@
     <script src="./includes/js/testMode.js"></script>
     <script src="./includes/js/firmware.js"></script>
     <script>
+        // Arxa plan ve loqo sekillerini onceden yukle
+        var bgPreload = new Image();
+        bgPreload.src = './image/Arxa.png';
+        var logoPreload = new Image();
+        logoPreload.src = './image/Lab.png';
+
         var fwVersion = getPs4FwVersion();
         var targetPage = getCachePage(fwVersion);
 
